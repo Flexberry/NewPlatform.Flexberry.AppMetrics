@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>App.Metrics.Extensions.Owin.Core</id>
+    <version>1.0.0</version>
+    <title>App.Metrics.Extensions.Owin.Core</title>
+    <authors>New Platform Ltd</authors>
+    <owners>New Platform Ltd</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>http://flexberry.ru/</licenseUrl>
+    <projectUrl>http://flexberry.net/</projectUrl>
+    <iconUrl>https://flexberry.net/img/logo-color.png</iconUrl>
+    <description>Расширения для подключени интеграция библиотеки AppMetrics для среды исполнения Owin для AspNet.Core.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright New Platform Ltd 2022</copyright>
+    <tags>Flexberry Metrics</tags>
+    <repository type="git" url="git://github.com/Flexberry/NewPlatform.Flexberry.AppMetrics" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5.2">
+        <dependency id="App.Metrics" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="App.Metrics.Core" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="App.Metrics.Formatters.Json" version="3.0.0" exclude="Build,Analyzers" />
+        <dependency id="App.Metrics.Extensions.Owin" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
