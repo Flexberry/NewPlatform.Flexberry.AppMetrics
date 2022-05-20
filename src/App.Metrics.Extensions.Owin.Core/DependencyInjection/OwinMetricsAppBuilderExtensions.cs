@@ -15,11 +15,11 @@ namespace App.Metrics
     {
 
         /// <summary>
-        /// Зарегистрировать реализацию сервисов сбора метрик.
+        /// Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ СЂРµР°Р»РёР·Р°С†РёСЋ СЃРµСЂРІРёСЃРѕРІ СЃР±РѕСЂР° РјРµС‚СЂРёРє.
         /// </summary>
-        /// <param name="services">Коллекция сервисов.</param>
-        /// <param name="onMetricsBuild">Делегат конфигурации метрик.</param>
-        /// <param name="options">Опции интеграции метрик OWIN.</param>
+        /// <param name="services">РљРѕР»Р»РµРєС†РёСЏ СЃРµСЂРІРёСЃРѕРІ.</param>
+        /// <param name="onMetricsBuild">Р”РµР»РµРіР°С‚ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РјРµС‚СЂРёРє.</param>
+        /// <param name="options">РћРїС†РёРё РёРЅС‚РµРіСЂР°С†РёРё РјРµС‚СЂРёРє OWIN.</param>
         public static void AddMetrics(this IServiceCollection services, Action<MetricsBuilder> onMetricsBuild, OwinMetricsOptions options)
         {
             var metricsBuilder = new MetricsBuilder();
@@ -32,40 +32,40 @@ namespace App.Metrics
         }
 
         /// <summary>
-        /// Зарегистрировать реализацию сервисов сбора метрик.
+        /// Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ СЂРµР°Р»РёР·Р°С†РёСЋ СЃРµСЂРІРёСЃРѕРІ СЃР±РѕСЂР° РјРµС‚СЂРёРє.
         /// </summary>
-        /// <param name="services">Коллекция сервисов.</param>
-        /// <param name="onMetricsBuild">Делегат конфигурации метрик.</param>
+        /// <param name="services">РљРѕР»Р»РµРєС†РёСЏ СЃРµСЂРІРёСЃРѕРІ.</param>
+        /// <param name="onMetricsBuild">Р”РµР»РµРіР°С‚ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РјРµС‚СЂРёРє.</param>
         public static void AddMetrics(this IServiceCollection services, Action<MetricsBuilder> onMetricsBuild)
         {
             services.AddMetrics(onMetricsBuild, new OwinMetricsOptions());
         }
 
         /// <summary>
-        /// Зарегистрировать реализацию сервисов сбора метрик.
+        /// Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ СЂРµР°Р»РёР·Р°С†РёСЋ СЃРµСЂРІРёСЃРѕРІ СЃР±РѕСЂР° РјРµС‚СЂРёРє.
         /// </summary>
-        /// <param name="services">Коллекция сервисов.</param>
-        /// <param name="options">Опции интеграции метрик OWIN.</param>
+        /// <param name="services">РљРѕР»Р»РµРєС†РёСЏ СЃРµСЂРІРёСЃРѕРІ.</param>
+        /// <param name="options">РћРїС†РёРё РёРЅС‚РµРіСЂР°С†РёРё РјРµС‚СЂРёРє OWIN.</param>
         public static void AddMetrics(this IServiceCollection services, OwinMetricsOptions options)
         {
             services.AddMetrics(x => { }, options);
         }
 
         /// <summary>
-        /// Зарегистрировать реализацию сервисов сбора метрик.
+        /// Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ СЂРµР°Р»РёР·Р°С†РёСЋ СЃРµСЂРІРёСЃРѕРІ СЃР±РѕСЂР° РјРµС‚СЂРёРє.
         /// </summary>
-        /// <param name="services">Коллекция сервисов.</param>
+        /// <param name="services">РљРѕР»Р»РµРєС†РёСЏ СЃРµСЂРІРёСЃРѕРІ.</param>
         public static void AddMetrics(this IServiceCollection services)
         {
             services.AddMetrics(x => { });
         }
 
         /// <summary>
-        /// Активировать обработчики метрик.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РѕР±СЂР°Р±РѕС‚С‡РёРєРё РјРµС‚СЂРёРє.
         /// </summary>
-        /// <param name="app">Объект конфигурации приложения.</param>
-        /// <param name="provider">Провайдер сервисов.</param>
-        /// <returns>Объект конфигурации приложения.</returns>
+        /// <param name="app">РћР±СЉРµРєС‚ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РїСЂРёР»РѕР¶РµРЅРёСЏ.</param>
+        /// <param name="provider">РџСЂРѕРІР°Р№РґРµСЂ СЃРµСЂРІРёСЃРѕРІ.</param>
+        /// <returns>РћР±СЉРµРєС‚ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РїСЂРёР»РѕР¶РµРЅРёСЏ.</returns>
         public static IAppBuilder UseMetrics(this IAppBuilder app, IServiceProvider provider)
         {
             if (app == null)
@@ -128,10 +128,10 @@ namespace App.Metrics
         }
 
         /// <summary>
-        /// Активировать репортер метрик.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ СЂРµРїРѕСЂС‚РµСЂ РјРµС‚СЂРёРє.
         /// </summary>
-        /// <param name="app">Объект конфигурации приложения.</param>
-        /// <param name="provider">Провайдер сервисов.</param>
+        /// <param name="app">РћР±СЉРµРєС‚ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РїСЂРёР»РѕР¶РµРЅРёСЏ.</param>
+        /// <param name="provider">РџСЂРѕРІР°Р№РґРµСЂ СЃРµСЂРІРёСЃРѕРІ.</param>
         /// <returns></returns>
         public static IAppBuilder UseMetricsReporting(this IAppBuilder app, IServiceProvider provider)
         {

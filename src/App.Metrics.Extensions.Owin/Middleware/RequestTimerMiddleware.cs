@@ -1,4 +1,4 @@
-// Copyright (c) Allan hardy. All rights reserved.
+п»ї// Copyright (c) Allan hardy. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 namespace App.Metrics.Extensions.Owin.Middleware
@@ -11,7 +11,7 @@ namespace App.Metrics.Extensions.Owin.Middleware
     using Timer;
 
     /// <summary>
-    /// Обработчик вычисления статистики по времени выполнения всех запросов.
+    /// РћР±СЂР°Р±РѕС‚С‡РёРє РІС‹С‡РёСЃР»РµРЅРёСЏ СЃС‚Р°С‚РёСЃС‚РёРєРё РїРѕ РІСЂРµРјРµРЅРё РІС‹РїРѕР»РЅРµРЅРёСЏ РІСЃРµС… Р·Р°РїСЂРѕСЃРѕРІ.
     /// </summary>
     public class RequestTimerMiddleware : AppMetricsMiddleware<OwinMetricsOptions>
     {

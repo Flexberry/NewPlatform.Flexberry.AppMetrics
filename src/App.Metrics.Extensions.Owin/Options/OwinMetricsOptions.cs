@@ -1,4 +1,4 @@
-// Copyright (c) Allan hardy. All rights reserved.
+п»ї// Copyright (c) Allan hardy. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 namespace App.Metrics.Extensions.Owin.Options
@@ -6,72 +6,72 @@ namespace App.Metrics.Extensions.Owin.Options
     using System.Collections.Generic;
 
     /// <summary>
-    /// Настройки метрик, специфичныех для интеграции Owin.
+    /// РќР°СЃС‚СЂРѕР№РєРё РјРµС‚СЂРёРє, СЃРїРµС†РёС„РёС‡РЅС‹РµС… РґР»СЏ РёРЅС‚РµРіСЂР°С†РёРё Owin.
     /// </summary>
     public class OwinMetricsOptions
     {
         /// <summary>
-        /// Включить сбор статистик APDEX.
+        /// Р’РєР»СЋС‡РёС‚СЊ СЃР±РѕСЂ СЃС‚Р°С‚РёСЃС‚РёРє APDEX.
         /// </summary>
         public bool ApdexTrackingEnabled { get; set; } = false;
 
         /// <summary>
-        /// Интервал сбора статистик APDEX.
+        /// РРЅС‚РµСЂРІР°Р» СЃР±РѕСЂР° СЃС‚Р°С‚РёСЃС‚РёРє APDEX.
         /// </summary>
         public double ApdexTSeconds { get; set; } = 0.5;
 
         /// <summary>
-        /// Список регулярных выражений, по которым определяются пути не обрабатываемые метриками.
+        /// РЎРїРёСЃРѕРє СЂРµРіСѓР»СЏСЂРЅС‹С… РІС‹СЂР°Р¶РµРЅРёР№, РїРѕ РєРѕС‚РѕСЂС‹Рј РѕРїСЂРµРґРµР»СЏСЋС‚СЃСЏ РїСѓС‚Рё РЅРµ РѕР±СЂР°Р±Р°С‚С‹РІР°РµРјС‹Рµ РјРµС‚СЂРёРєР°РјРё.
         /// </summary>
         public IList<string> IgnoredRoutesRegexPatterns { get; set; } = new List<string>();
 
         /// <summary>
-        /// Путь по которому выдаются метрики.
+        /// РџСѓС‚СЊ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РІС‹РґР°СЋС‚СЃСЏ РјРµС‚СЂРёРєРё.
         /// </summary>
         public string MetricsEndpoint { get; set; } = "/metrics";
 
         /// <summary>
-        /// Активировать конечную точку с метриками по пути MetricsEndpoint.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РєРѕРЅРµС‡РЅСѓСЋ С‚РѕС‡РєСѓ СЃ РјРµС‚СЂРёРєР°РјРё РїРѕ РїСѓС‚Рё MetricsEndpoint.
         /// </summary>
         public bool MetricsEndpointEnabled { get; set; } = true;
 
         /// <summary>
-        /// Путь по которому выдаются эхо-ответ.
+        /// РџСѓС‚СЊ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РІС‹РґР°СЋС‚СЃСЏ СЌС…Рѕ-РѕС‚РІРµС‚.
         /// </summary>
         public string PingEndpoint { get; set; } = "/ping";
 
         /// <summary>
-        /// Активировать конечную точку с эхо-ответом по пути PingEndpoint.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РєРѕРЅРµС‡РЅСѓСЋ С‚РѕС‡РєСѓ СЃ СЌС…Рѕ-РѕС‚РІРµС‚РѕРј РїРѕ РїСѓС‚Рё PingEndpoint.
         /// </summary>
         public bool PingEndpointEnabled { get; set; } = false;
 
         /// <summary>
-        /// Активировать обработчик вычисления статистики по времени выполнения конкретных запросов. См. PerRequestTimerOptions.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РѕР±СЂР°Р±РѕС‚С‡РёРє РІС‹С‡РёСЃР»РµРЅРёСЏ СЃС‚Р°С‚РёСЃС‚РёРєРё РїРѕ РІСЂРµРјРµРЅРё РІС‹РїРѕР»РЅРµРЅРёСЏ РєРѕРЅРєСЂРµС‚РЅС‹С… Р·Р°РїСЂРѕСЃРѕРІ. РЎРј. PerRequestTimerOptions.
         /// </summary>
         public bool PerRequestTimerEnabled { get; set; } = false;
 
         /// <summary>
-        /// Параметры сбора статистик на отдельных роутах.
+        /// РџР°СЂР°РјРµС‚СЂС‹ СЃР±РѕСЂР° СЃС‚Р°С‚РёСЃС‚РёРє РЅР° РѕС‚РґРµР»СЊРЅС‹С… СЂРѕСѓС‚Р°С….
         /// </summary>
         public PerRequestTimerOptions PerRequestTimerOptions { get; set; }
 
         /// <summary>
-        /// Активировать обработчик вычисления статистики по времени выполнения всех запросов.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РѕР±СЂР°Р±РѕС‚С‡РёРє РІС‹С‡РёСЃР»РµРЅРёСЏ СЃС‚Р°С‚РёСЃС‚РёРєРё РїРѕ РІСЂРµРјРµРЅРё РІС‹РїРѕР»РЅРµРЅРёСЏ РІСЃРµС… Р·Р°РїСЂРѕСЃРѕРІ.
         /// </summary>
         public bool RequestTimerEnabled { get; set; } = false;
 
         /// <summary>
-        /// Активировать обработчик вычисления размера тела запросов PUT и POST.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РѕР±СЂР°Р±РѕС‚С‡РёРє РІС‹С‡РёСЃР»РµРЅРёСЏ СЂР°Р·РјРµСЂР° С‚РµР»Р° Р·Р°РїСЂРѕСЃРѕРІ PUT Рё POST.
         /// </summary>
         public bool PostAndPutRequestSizeEnabled { get; set; } = false;
 
         /// <summary>
-        /// Активировать обработчик счетчика одновременно выполняемых запросов.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РѕР±СЂР°Р±РѕС‚С‡РёРє СЃС‡РµС‚С‡РёРєР° РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ РІС‹РїРѕР»РЅСЏРµРјС‹С… Р·Р°РїСЂРѕСЃРѕРІ.
         /// </summary>
         public bool ActiveRequestCounterEnabled { get; set; } = true;
 
         /// <summary>
-        /// Активировать обработчик вычисления общей частоты ошибочных запросов.
+        /// РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ РѕР±СЂР°Р±РѕС‚С‡РёРє РІС‹С‡РёСЃР»РµРЅРёСЏ РѕР±С‰РµР№ С‡Р°СЃС‚РѕС‚С‹ РѕС€РёР±РѕС‡РЅС‹С… Р·Р°РїСЂРѕСЃРѕРІ.
         /// </summary>
         public bool ErrorRequestMeterEnabled { get; set; } = false;
     }

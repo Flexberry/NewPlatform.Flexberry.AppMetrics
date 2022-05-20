@@ -1,4 +1,4 @@
-// Copyright (c) Allan hardy. All rights reserved.
+п»ї// Copyright (c) Allan hardy. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 namespace App.Metrics.Extensions.Owin.Middleware
@@ -9,7 +9,7 @@ namespace App.Metrics.Extensions.Owin.Middleware
     using System.Threading.Tasks;
 
     /// <summary>
-    ///  Обработчик вычисления общей частоты ошибочных запросов.
+    ///  РћР±СЂР°Р±РѕС‚С‡РёРє РІС‹С‡РёСЃР»РµРЅРёСЏ РѕР±С‰РµР№ С‡Р°СЃС‚РѕС‚С‹ РѕС€РёР±РѕС‡РЅС‹С… Р·Р°РїСЂРѕСЃРѕРІ.
     /// </summary>
     public class ErrorRequestMeterMiddleware : AppMetricsMiddleware<OwinMetricsOptions>
     {
