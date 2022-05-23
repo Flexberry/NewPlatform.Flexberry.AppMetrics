@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>NewPlatform.Flexberry.AppMetrics.Owin</id>
-    <version>1.0.0</version>
+    <version>1.0.1-beta1</version>
     <title>NewPlatform.Flexberry.AppMetrics.Owin</title>
     <authors>New Platform Ltd</authors>
     <owners>New Platform Ltd</owners>
