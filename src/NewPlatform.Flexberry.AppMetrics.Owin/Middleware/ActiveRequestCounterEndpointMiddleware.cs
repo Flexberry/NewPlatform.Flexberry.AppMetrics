@@ -14,6 +14,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
     /// </summary>
     public class ActiveRequestCounterEndpointMiddleware : AppMetricsMiddleware<OwinMetricsOptions>
     {
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="options">Класс параметров.</param>
+        /// <param name="metrics">Объект с метриками.</param>
         public ActiveRequestCounterEndpointMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
         {
             if (owinOptions == null)

@@ -19,6 +19,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         private const string ApdexItemsKey = "__NewPlatform.Flexberry.AppMetrics.Apdex__";
         private readonly IApdex _apdexTracking;
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="options">Класс параметров.</param>
+        /// <param name="metrics">Объект с метриками.</param>
         public ApdexMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
         {
             _apdexTracking = Metrics.Provider.Apdex.Instance(OwinMetricsRegistry.HttpRequests.ApdexScores.Apdex(owinOptions.ApdexTSeconds));

@@ -17,7 +17,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
     {
         private const string TimerItemsKey = "__NewPlatform.Flexberry.AppMetrics.PerRequestStartTime__";
 
-
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="options">Класс параметров.</param>
+        /// <param name="metrics">Объект с метриками.</param>
         public PerRequestTimerMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
         {
 

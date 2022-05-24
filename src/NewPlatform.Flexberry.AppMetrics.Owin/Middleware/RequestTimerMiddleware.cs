@@ -19,6 +19,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         private const string TimerItemsKey = "__NewPlatform.Flexberry.AppMetrics.RequestTimer__";
         private readonly ITimer _requestTimer;
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="options">Класс параметров.</param>
+        /// <param name="metrics">Объект с метриками.</param>
         public RequestTimerMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
         {
             _requestTimer = Metrics.Provider.Timer.Instance(OwinMetricsRegistry.HttpRequests.Timers.WebRequestTimer);

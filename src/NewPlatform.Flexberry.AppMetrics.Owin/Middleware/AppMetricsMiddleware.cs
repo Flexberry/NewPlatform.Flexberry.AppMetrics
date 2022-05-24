@@ -34,6 +34,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// </summary>
         private string _middlewareType;
 
+        /// <summary>
+        /// Конструктор базового класса обработчиков метрик <see cref="AppMetricsMiddleware{TOptions}"/>.
+        /// </summary>
+        /// <param name="options">Класс параметров.</param>
+        /// <param name="metrics">Объект с метриками.</param>
         protected AppMetricsMiddleware(TOptions options, IMetrics metrics)
         {
             if (options == null)
@@ -71,8 +76,8 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// Получить текущий роут.
         /// </summary>
         /// <param name="environment">Контекст Owin.</param>
-        /// <param name="appendHttpMethod">Включать ли в роут название HTTP-метода (GET, POST, ...)</param>
-        /// <returns>Роут./</returns>
+        /// <param name="appendHttpMethod">Включать ли в роут название HTTP-метода (GET, POST, ...).</param>
+        /// <returns>Роут.</returns>
         protected static string GetMetricsCurrentRouteName(IDictionary<string, object> environment, bool appendHttpMethod = false)
         {
             var path = environment["owin.RequestPath"].ToString().ToLower();

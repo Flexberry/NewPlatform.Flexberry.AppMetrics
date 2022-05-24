@@ -21,6 +21,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         private const string MetricsMimeType = "application/vnd.NewPlatform.Flexberry.AppMetrics.v1.metrics+json";
         private readonly IMetricsOutputFormatter _serializer;
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="options">Класс параметров.</param>
+        /// <param name="metrics">Объект с метриками.</param>
         public MetricsEndpointMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics, IMetricsOutputFormatter serializer)
             : base(owinOptions, metrics)
         {
