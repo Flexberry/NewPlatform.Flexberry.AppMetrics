@@ -24,6 +24,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             _apdexTracking = Metrics.Provider.Apdex.Instance(OwinMetricsRegistry.HttpRequests.ApdexScores.Apdex(owinOptions.ApdexTSeconds));
         }
 
+        /// <summary>
+        /// Метод вызываемый средой Owin для выполнения кода обработчика (Middleware).
+        /// </summary>
+        /// <param name="environment">Словарь содержащий контекст вызова.</param>
+        /// <returns><see cref="Task"/> результат асинхронной операции.</returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
             if (ShouldPerformMetric(environment))

@@ -85,11 +85,17 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             return httpMethod + " " + path;
         }
 
+        /// <summary>
+        /// Метод вызываемый перед запуском тела обработчика.
+        /// </summary>
         protected virtual void MiddlewareExecuted()
         {
             Logger.Debug($"Executed Owin Metrics Middleare {_middlewareType}");
         }
 
+        /// <summary>
+        /// Метод вызываемый после запуска тела обработчика.
+        /// </summary>
         protected virtual void MiddlewareExecuting()
         {
             Logger.Debug($"Executing Owin Metrics Middleare {_middlewareType}");
@@ -128,7 +134,7 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// Определить выполнять ли сбор метрики для текущего вызова.
         /// </summary>
         /// <param name="environment">Контекст Owin.</param>
-        /// <returns></returns>
+        /// <returns>true, если должен выполнится сбор метрики.</returns>
         protected virtual bool ShouldPerformMetric(IDictionary<string, object> environment)
         {
             var requestPath = environment["owin.RequestPath"] as string;
@@ -146,6 +152,14 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             return _shouldRecordMetric(requestPath);
         }
 
+        /// <summary>
+        /// Выполнить запись тела ответа.
+        /// </summary>
+        /// <param name="environment">Контекст Owin.</param>
+        /// <param name="content">Содержимое.</param>
+        /// <param name="contentType">MIME-тип ответа.</param>
+        /// <param name="code">HTTP-код ответа.</param>
+        /// <param name="warning">Текст предупреждения.</param>
         protected Task WriteResponseAsync(IDictionary<string, object> environment, string content, string contentType,
             HttpStatusCode code = HttpStatusCode.OK, string warning = null)
         {
