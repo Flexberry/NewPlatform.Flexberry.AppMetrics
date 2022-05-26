@@ -3,13 +3,13 @@
 
 namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 {
-    using App.Metrics;
-    using App.Metrics.Timer;
-    using Internal;
-    using Options;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using App.Metrics;
+    using App.Metrics.Timer;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Internal;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
     /// <summary>
     /// Обработчик вычисления статистики по времени выполнения всех запросов.
@@ -22,9 +22,10 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="options">Класс параметров.</param>
+        /// <param name="owinOptions">Класс параметров.</param>
         /// <param name="metrics">Объект с метриками.</param>
-        public RequestTimerMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
+        public RequestTimerMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics)
+            : base(owinOptions, metrics)
         {
             _requestTimer = Metrics.Provider.Timer.Instance(OwinMetricsRegistry.HttpRequests.Timers.WebRequestTimer);
         }
@@ -42,19 +43,20 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 
                 environment[TimerItemsKey] = _requestTimer.NewContext();
 
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
 
                 var timer = environment[TimerItemsKey];
                 using (timer as IDisposable)
                 {
                 }
+
                 environment.Remove(TimerItemsKey);
 
                 MiddlewareExecuted();
             }
             else
             {
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
             }
         }
     }

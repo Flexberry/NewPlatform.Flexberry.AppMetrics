@@ -3,12 +3,14 @@
 
 namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 {
-    using App.Metrics;
-    using Options;
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
+    using App.Metrics;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
     /// <summary>
     /// Обработчик вычисления статистики по времени выполнения конкретных запросов.
@@ -20,28 +22,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="options">Класс параметров.</param>
+        /// <param name="owinOptions">Класс параметров.</param>
         /// <param name="metrics">Объект с метриками.</param>
-        public PerRequestTimerMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
+        public PerRequestTimerMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics)
+            : base(owinOptions, metrics)
         {
-
-        }
-
-        /// <inheritdoc/>
-        protected override bool ShouldPerformMetric(IDictionary<string, object> environment)
-        {
-            if (!base.ShouldPerformMetric(environment))
-            {
-                return false;
-            }
-            var includeList = Options.PerRequestTimerOptions.IncludeRouteList;
-            if (includeList.Any())
-            {
-                var path = GetMetricsCurrentRouteName(environment);
-                return includeList.Contains(path);
-            }
-
-            return true;
         }
 
         /// <summary>
@@ -55,11 +40,16 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             {
                 MiddlewareExecuting();
 
-                var httpResponseStatusCode = int.Parse(environment["owin.ResponseStatusCode"].ToString());
+                if (environment == null)
+                {
+                    throw new ArgumentNullException(nameof(environment));
+                }
+
+                var httpResponseStatusCode = int.Parse(environment["owin.ResponseStatusCode"].ToString(), CultureInfo.InvariantCulture);
 
                 environment[TimerItemsKey] = Metrics.Clock.Nanoseconds;
 
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
 
                 if (httpResponseStatusCode != (int)HttpStatusCode.NotFound)
                 {
@@ -73,8 +63,26 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             }
             else
             {
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override bool ShouldPerformMetric(IDictionary<string, object> environment)
+        {
+            if (!base.ShouldPerformMetric(environment))
+            {
+                return false;
+            }
+
+            var includeList = Options.PerRequestTimerOptions.IncludeRouteList;
+            if (includeList.Any())
+            {
+                var path = GetMetricsCurrentRouteName(environment);
+                return includeList.Contains(path);
+            }
+
+            return true;
         }
     }
 }

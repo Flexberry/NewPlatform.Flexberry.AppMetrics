@@ -3,13 +3,13 @@
 
 namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 {
-    using App.Metrics;
-    using App.Metrics.Apdex;
-    using Internal;
-    using Options;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using App.Metrics;
+    using App.Metrics.Apdex;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Internal;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
     /// <summary>
     /// Обработчик вычисления статистики APDEX.
@@ -22,9 +22,10 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="options">Класс параметров.</param>
+        /// <param name="owinOptions">Класс параметров.</param>
         /// <param name="metrics">Объект с метриками.</param>
-        public ApdexMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
+        public ApdexMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics)
+            : base(owinOptions, metrics)
         {
             _apdexTracking = Metrics.Provider.Apdex.Instance(OwinMetricsRegistry.HttpRequests.ApdexScores.Apdex(owinOptions.ApdexTSeconds));
         }
@@ -42,19 +43,20 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 
                 environment[ApdexItemsKey] = _apdexTracking.NewContext();
 
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
 
                 var apdex = environment[ApdexItemsKey];
                 using (apdex as IDisposable)
                 {
                 }
+
                 environment.Remove(ApdexItemsKey);
 
                 MiddlewareExecuted();
             }
             else
             {
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
             }
         }
     }

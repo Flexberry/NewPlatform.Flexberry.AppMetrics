@@ -3,11 +3,11 @@
 
 namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 {
-    using App.Metrics;
-    using Options;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using App.Metrics;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
     /// <summary>
     /// Обработчик счетчика одновременно выполняемых запросов.
@@ -17,9 +17,10 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="options">Класс параметров.</param>
+        /// <param name="owinOptions">Класс параметров.</param>
         /// <param name="metrics">Объект с метриками.</param>
-        public ActiveRequestCounterEndpointMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
+        public ActiveRequestCounterEndpointMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics)
+            : base(owinOptions, metrics)
         {
             if (owinOptions == null)
             {
@@ -38,13 +39,13 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             {
                 MiddlewareExecuting();
                 Metrics.IncrementActiveRequests();
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
                 Metrics.DecrementActiveRequests();
                 MiddlewareExecuted();
             }
             else
             {
-                await Next(environment);
+                await Next(environment).ConfigureAwait(true);
             }
         }
     }

@@ -3,6 +3,7 @@
 
 namespace NewPlatform.Flexberry.AppMetrics
 {
+    using System.Globalization;
     using App.Metrics;
     using App.Metrics.Gauge;
     using NewPlatform.Flexberry.AppMetrics.Owin.Internal;
@@ -62,10 +63,9 @@ namespace NewPlatform.Flexberry.AppMetrics
         /// <returns>Объект учета метрик.</returns>
         public static IMetrics MarkHttpRequestEndpointError(this IMetrics metrics, string routeTemplate, int httpStatusCode)
         {
-
             metrics.Measure.Meter.Mark(
                 OwinMetricsRegistry.HttpRequests.Meters.EndpointHttpErrorRequests(routeTemplate),
-                new MetricSetItem("http_status_code", httpStatusCode.ToString()));
+                new MetricSetItem("http_status_code", httpStatusCode.ToString(CultureInfo.InvariantCulture)));
 
             return metrics;
         }
@@ -80,7 +80,7 @@ namespace NewPlatform.Flexberry.AppMetrics
         {
             metrics.Measure.Meter.Mark(
                 OwinMetricsRegistry.HttpRequests.Meters.HttpErrorRequests,
-                new MetricSetItem("http_status_code", httpStatusCode.ToString()));
+                new MetricSetItem("http_status_code", httpStatusCode.ToString(CultureInfo.InvariantCulture)));
 
             return metrics;
         }

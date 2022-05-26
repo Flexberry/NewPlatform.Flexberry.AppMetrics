@@ -13,7 +13,7 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Options
         /// <summary>
         /// Включить сбор статистик APDEX.
         /// </summary>
-        public bool ApdexTrackingEnabled { get; set; } = false;
+        public bool ApdexTrackingEnabled { get; set; }
 
         /// <summary>
         /// Интервал сбора статистик APDEX.
@@ -43,12 +43,12 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Options
         /// <summary>
         /// Активировать конечную точку с эхо-ответом по пути PingEndpoint.
         /// </summary>
-        public bool PingEndpointEnabled { get; set; } = false;
+        public bool PingEndpointEnabled { get; set; }
 
         /// <summary>
         /// Активировать обработчик вычисления статистики по времени выполнения конкретных запросов. См. PerRequestTimerOptions.
         /// </summary>
-        public bool PerRequestTimerEnabled { get; set; } = false;
+        public bool PerRequestTimerEnabled { get; set; }
 
         /// <summary>
         /// Параметры сбора статистик на отдельных роутах.
@@ -58,12 +58,12 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Options
         /// <summary>
         /// Активировать обработчик вычисления статистики по времени выполнения всех запросов.
         /// </summary>
-        public bool RequestTimerEnabled { get; set; } = false;
+        public bool RequestTimerEnabled { get; set; }
 
         /// <summary>
         /// Активировать обработчик вычисления размера тела запросов PUT и POST.
         /// </summary>
-        public bool PostAndPutRequestSizeEnabled { get; set; } = false;
+        public bool PostAndPutRequestSizeEnabled { get; set; }
 
         /// <summary>
         /// Активировать обработчик счетчика одновременно выполняемых запросов.
@@ -73,6 +73,6 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Options
         /// <summary>
         /// Активировать обработчик вычисления общей частоты ошибочных запросов.
         /// </summary>
-        public bool ErrorRequestMeterEnabled { get; set; } = false;
+        public bool ErrorRequestMeterEnabled { get; set; }
     }
 }

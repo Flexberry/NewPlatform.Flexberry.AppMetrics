@@ -3,6 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Класс параметров для таймера запросов.
+    /// </summary>
     public class PerRequestTimerOptions
     {
         /// <summary>

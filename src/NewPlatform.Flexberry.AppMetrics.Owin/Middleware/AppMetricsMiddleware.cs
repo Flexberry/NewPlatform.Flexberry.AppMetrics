@@ -1,28 +1,29 @@
 ﻿// Copyright (c) Allan hardy. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 {
-    using App.Metrics;
-    using App.Metrics.Logging;
-    using Extensions;
-    using Options;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Text;
     using System.Text.RegularExpressions;
-    using AppFunc = Func<IDictionary<string, object>, Task>;
+    using System.Threading.Tasks;
+    using App.Metrics;
+    using App.Metrics.Logging;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Extensions;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
+    using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 
     /// <summary>
     /// Базовый класс обработчиков метрик.
     /// </summary>
-    /// <typeparam name="TOptions"></typeparam>
-    public abstract class AppMetricsMiddleware<TOptions> where TOptions : OwinMetricsOptions, new()
+    /// <typeparam name="TOptions">Параметры метрик Owin.</typeparam>
+    public abstract class AppMetricsMiddleware<TOptions>
+        where TOptions : OwinMetricsOptions, new()
     {
         /// <summary>
         /// Делегат для оптимизации процедуры фильтрации обрабатываемых метрик.
@@ -80,13 +81,18 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <returns>Роут.</returns>
         protected static string GetMetricsCurrentRouteName(IDictionary<string, object> environment, bool appendHttpMethod = false)
         {
-            var path = environment["owin.RequestPath"].ToString().ToLower();
+            if (environment == null)
+            {
+                throw new ArgumentNullException(nameof(environment));
+            }
+
+            var path = environment["owin.RequestPath"].ToString().ToLower(CultureInfo.InvariantCulture);
             if (!appendHttpMethod)
             {
                 return path;
             }
 
-            var httpMethod = environment["owin.RequestMethod"].ToString().ToUpper();
+            var httpMethod = environment["owin.RequestMethod"].ToString().ToUpper(CultureInfo.InvariantCulture);
             return httpMethod + " " + path;
         }
 
@@ -165,9 +171,14 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <param name="contentType">MIME-тип ответа.</param>
         /// <param name="code">HTTP-код ответа.</param>
         /// <param name="warning">Текст предупреждения.</param>
-        protected Task WriteResponseAsync(IDictionary<string, object> environment, string content, string contentType,
-            HttpStatusCode code = HttpStatusCode.OK, string warning = null)
+        /// <returns>Тело ответа.</returns>
+        protected Task WriteResponseAsync(IDictionary<string, object> environment, string content, string contentType, HttpStatusCode code = HttpStatusCode.OK, string warning = null)
         {
+            if (environment == null)
+            {
+                throw new ArgumentNullException(nameof(environment));
+            }
+
             var response = environment["owin.ResponseBody"] as Stream;
             var headers = environment["owin.ResponseHeaders"] as IDictionary<string, string[]>;
             var contentBytes = Encoding.UTF8.GetBytes(content);
@@ -185,6 +196,5 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             environment["owin.ResponseStatusCode"] = (int)code;
             return response.WriteAsync(contentBytes, 0, contentBytes.Length);
         }
-
     }
 }

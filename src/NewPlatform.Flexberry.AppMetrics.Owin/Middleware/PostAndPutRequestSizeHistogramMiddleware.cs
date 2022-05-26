@@ -3,11 +3,12 @@
 
 namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 {
-    using App.Metrics;
-    using Options;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
+    using App.Metrics;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
     /// <summary>
     /// Обработчик вычисления размера тела запросов PUT и POST.
@@ -17,9 +18,10 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="options">Класс параметров.</param>
+        /// <param name="owinOptions">Класс параметров.</param>
         /// <param name="metrics">Объект с метриками.</param>
-        public PostAndPutRequestSizeHistogramMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
+        public PostAndPutRequestSizeHistogramMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics)
+            : base(owinOptions, metrics)
         {
         }
 
@@ -34,21 +36,21 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
             {
                 MiddlewareExecuting();
 
-                var httpMethod = environment["owin.RequestMethod"].ToString().ToUpper();
+                var httpMethod = environment["owin.RequestMethod"].ToString().ToUpper(CultureInfo.InvariantCulture);
 
                 if (httpMethod == "POST" || httpMethod == "PUT")
                 {
                     var headers = (IDictionary<string, string[]>)environment["owin.RequestHeaders"];
                     if (headers != null && headers.ContainsKey("Content-Length"))
                     {
-                        Metrics.UpdatePostAndPutRequestSize(long.Parse(headers["Content-Length"].First()));
+                        Metrics.UpdatePostAndPutRequestSize(long.Parse(headers["Content-Length"].First(), CultureInfo.InvariantCulture));
                     }
                 }
 
                 MiddlewareExecuted();
             }
 
-            await Next(environment);
+            await Next(environment).ConfigureAwait(true);
         }
     }
 }
