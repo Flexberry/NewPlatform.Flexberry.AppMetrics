@@ -3,11 +3,12 @@
 
 namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
 {
-    using App.Metrics;
-    using Extensions;
-    using Options;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using App.Metrics;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Extensions;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
     /// <summary>
     /// Конечная точка эхо-ответа.
@@ -17,11 +18,11 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <summary>
         /// Конструктор.
         /// </summary>
-        /// <param name="options">Класс параметров.</param>
+        /// <param name="owinOptions">Класс параметров.</param>
         /// <param name="metrics">Объект с метриками.</param>
-        public PingEndpointMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics) : base(owinOptions, metrics)
+        public PingEndpointMiddleware(OwinMetricsOptions owinOptions, IMetrics metrics)
+            : base(owinOptions, metrics)
         {
-
         }
 
         /// <summary>
@@ -31,20 +32,25 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin.Middleware
         /// <returns><see cref="Task"/> результат асинхронной операции.</returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
+            if (environment == null)
+            {
+                throw new ArgumentNullException(nameof(environment));
+            }
+
             var requestPath = environment["owin.RequestPath"] as string;
 
             if (Options.PingEndpointEnabled && Options.PingEndpoint.IsPresent() && Options.PingEndpoint == requestPath)
             {
                 MiddlewareExecuting();
 
-                await WriteResponseAsync(environment, "pong", "text/plain");
+                await WriteResponseAsync(environment, "pong", "text/plain").ConfigureAwait(true);
 
                 MiddlewareExecuted();
 
                 return;
             }
 
-            await Next(environment);
+            await Next(environment).ConfigureAwait(true);
         }
     }
 }
