@@ -3,18 +3,20 @@
 
 namespace NewPlatform.Flexberry.AppMetrics
 {
-    using App.Metrics;
-    using global::Owin;
-    using Microsoft.Extensions.DependencyInjection;
-    using Owin.Middleware;
-    using Owin.Options;
     using System;
     using System.Threading.Tasks;
     using System.Web.Hosting;
+    using App.Metrics;
+    using global::Owin;
+    using Microsoft.Extensions.DependencyInjection;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Middleware;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
+    /// <summary>
+    /// Расширения метрик.
+    /// </summary>
     public static class OwinMetricsAppBuilderExtensions
     {
-
         /// <summary>
         /// Зарегистрировать реализацию сервисов сбора метрик.
         /// </summary>
@@ -24,6 +26,12 @@ namespace NewPlatform.Flexberry.AppMetrics
         public static void AddMetrics(this IServiceCollection services, Action<MetricsBuilder> onMetricsBuild, OwinMetricsOptions options)
         {
             var metricsBuilder = new MetricsBuilder();
+
+            if (onMetricsBuild == null)
+            {
+                throw new ArgumentNullException(nameof(onMetricsBuild));
+            }
+
             onMetricsBuild(metricsBuilder);
             var metrics = metricsBuilder.Build();
             services.AddSingleton(options);
@@ -66,7 +74,7 @@ namespace NewPlatform.Flexberry.AppMetrics
         /// </summary>
         /// <param name="app">Объект конфигурации приложения.</param>
         /// <param name="provider">Провайдер сервисов.</param>
-        /// <returns>Объект конфигурации приложения.</returns>
+        /// <returns>Измененный объект конфигурации приложения.</returns>
         public static IAppBuilder UseMetrics(this IAppBuilder app, IServiceProvider provider)
         {
             if (app == null)
@@ -133,7 +141,7 @@ namespace NewPlatform.Flexberry.AppMetrics
         /// </summary>
         /// <param name="app">Объект конфигурации приложения.</param>
         /// <param name="provider">Провайдер сервисов.</param>
-        /// <returns></returns>
+        /// <returns>Измененный объект конфигурации приложения.</returns>
         public static IAppBuilder UseMetricsReporting(this IAppBuilder app, IServiceProvider provider)
         {
             if (app == null)
@@ -149,7 +157,7 @@ namespace NewPlatform.Flexberry.AppMetrics
             HostingEnvironment.QueueBackgroundWorkItem(async cancellationToken =>
             {
                 var metricsRoot = provider.GetRequiredService<IMetricsRoot>();
-                await Task.WhenAll(metricsRoot.ReportRunner.RunAllAsync(cancellationToken));
+                await Task.WhenAll(metricsRoot.ReportRunner.RunAllAsync(cancellationToken)).ConfigureAwait(true);
             });
 
             return app;

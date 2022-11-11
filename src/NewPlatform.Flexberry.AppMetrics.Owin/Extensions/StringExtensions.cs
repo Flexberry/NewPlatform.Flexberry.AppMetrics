@@ -12,7 +12,7 @@
         /// <returns>Строка со слэшем в начале.</returns>
         internal static string EnsureLeadingSlash(this string url)
         {
-            if (!url.StartsWith("/"))
+            if (!url.StartsWith("/", System.StringComparison.Ordinal))
             {
                 return "/" + url;
             }
@@ -37,7 +37,7 @@
         /// <returns>Строка без слэша в начале.</returns>
         internal static string RemoveLeadingSlash(this string url)
         {
-            if (url != null && url.StartsWith("/"))
+            if (url != null && url.StartsWith("/", System.StringComparison.Ordinal))
             {
                 url = url.Substring(1);
             }

@@ -3,11 +3,14 @@ using Unity;
 
 namespace NewPlatform.Flexberry.AppMetrics.Owin
 {
-    using App.Metrics;
-    using Middleware;
-    using Options;
     using System;
+    using App.Metrics;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Middleware;
+    using NewPlatform.Flexberry.AppMetrics.Owin.Options;
 
+    /// <summary>
+    /// Unity расширения.
+    /// </summary>
     public static class OwinMetricsUnityExtensions
     {
         /// <summary>
@@ -19,6 +22,12 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin
         public static void AddMetrics(this IUnityContainer container, Action<MetricsBuilder> onMetricsBuild, OwinMetricsOptions options)
         {
             var metricsBuilder = new MetricsBuilder();
+
+            if (onMetricsBuild == null)
+            {
+                throw new ArgumentNullException(nameof(onMetricsBuild));
+            }
+
             onMetricsBuild(metricsBuilder);
             var metrics = metricsBuilder.Build();
             container.RegisterInstance(options);
@@ -53,7 +62,7 @@ namespace NewPlatform.Flexberry.AppMetrics.Owin
         /// <param name="container">Unity - контейнер.</param>
         public static void AddMetrics(this IUnityContainer container)
         {
-            container.AddMetrics(x=> { });
+            container.AddMetrics(x => { });
         }
 
         /// <summary>
